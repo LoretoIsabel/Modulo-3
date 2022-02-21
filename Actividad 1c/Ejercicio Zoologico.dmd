@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Ejercicio Zoologico" id="6B37DACB-FB1C-6816-9EBD-5B273E936477" version="3.5">
+<createdBy>loreb</createdBy>
+<createdTime>2022-02-21 15:37:35 UTC</createdTime>
+<ownerDesignName>Ejercicio Zoologico</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>6B37DACB-FB1C-6816-9EBD-5B273E936477</designId>
+</OSDM_Design>
