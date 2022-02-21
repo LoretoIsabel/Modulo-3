@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Caso Hotel" id="CE54B700-58AB-FB0F-D977-68DCC74F23AD" version="3.5">
+<createdBy>loreb</createdBy>
+<createdTime>2022-02-21 22:55:57 UTC</createdTime>
+<ownerDesignName>Caso Hotel</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>CE54B700-58AB-FB0F-D977-68DCC74F23AD</designId>
+</OSDM_Design>
