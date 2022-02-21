@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Ejericico farmacia" id="9E90BC1B-5F91-DAAF-9A7E-77277DF97DDD" version="3.5">
+<createdBy>loreb</createdBy>
+<createdTime>2022-02-21 16:51:39 UTC</createdTime>
+<ownerDesignName>Ejericico farmacia</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>9E90BC1B-5F91-DAAF-9A7E-77277DF97DDD</designId>
+</OSDM_Design>
