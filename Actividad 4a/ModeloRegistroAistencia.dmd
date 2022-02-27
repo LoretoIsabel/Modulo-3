@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="ModeloRegistroAistencia" id="3E6CD9D3-F5C6-2472-D87B-D9617E247434" version="3.5">
+<createdBy>wflores</createdBy>
+<createdTime>2020-01-26 17:43:38 UTC</createdTime>
+<ownerDesignName>ModeloRegistroAistencia</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>3E6CD9D3-F5C6-2472-D87B-D9617E247434</designId>
+</OSDM_Design>
