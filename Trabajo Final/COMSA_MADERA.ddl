@@ -1,5 +1,5 @@
 -- Generado por Oracle SQL Developer Data Modeler 20.4.1.406.0906
---   en:        2022-02-27 22:40:35 CLST
+--   en:        2022-02-28 00:57:17 CLST
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -37,48 +37,52 @@ CREATE TABLE datos_transportista (
 ALTER TABLE datos_transportista ADD CONSTRAINT datos_transportista_pk PRIMARY KEY ( rutchofer );
 
 CREATE TABLE factura_compra (
-    idfactura        VARCHAR2(10) NOT NULL,
-    subtotal_mr      NUMBER(20) NOT NULL,
-    valor_mr         NUMBER(20) NOT NULL,
-    neto             NUMBER(15) NOT NULL,
-    iva              NUMBER(20) NOT NULL,
-    total            NUMBER(20, 2) NOT NULL,
-    rutproveedor     VARCHAR2(10) NOT NULL,
-    nombreproveedor  VARCHAR2(10) NOT NULL,
-    idventadirecta   INTEGER,
-    idfaena          VARCHAR2(20)
+    idfactura         VARCHAR2(10) NOT NULL,
+    nombreproveedor   VARCHAR2(20) NOT NULL,
+    cantidad_mr       NUMBER(20) NOT NULL,
+    rutproveedor      VARCHAR2(10) NOT NULL,
+    valor_mr          NUMBER(20) NOT NULL,
+    valor_cosecha     NUMBER(10),
+    valor_transporte  NUMBER(100),
+    neto              NUMBER(15) NOT NULL,
+    iva               NUMBER(20) NOT NULL,
+    total             NUMBER(20, 2) NOT NULL,
+    valorcosecha      NUMBER(10),
+    valortransporte   NUMBER(10)
 );
 
 ALTER TABLE factura_compra ADD CONSTRAINT factura_compra_pk PRIMARY KEY ( idfactura );
 
 CREATE TABLE faena (
-    idfaena VARCHAR2(20) NOT NULL
+    idfaena      VARCHAR2(20) NOT NULL,
+    idrecepcion  VARCHAR2(10) NOT NULL
 );
 
 ALTER TABLE faena ADD CONSTRAINT faena_pk PRIMARY KEY ( idfaena );
 
 CREATE TABLE informe_recepcion (
-    idrecepcion       VARCHAR2(10) NOT NULL,
-    sucursal          INTEGER NOT NULL,
-    fecharecepcion    DATE NOT NULL,
-    horarecepcion     TIMESTAMP(4) WITH LOCAL TIME ZONE NOT NULL,
-    rutrecepcionista  VARCHAR2(10) NOT NULL,
-    idguiarep         VARCHAR2(10) NOT NULL,
-    fechaguiarecp     DATE NOT NULL,
-    altura1           VARCHAR2(10) NOT NULL,
-    altura2           VARCHAR2(10),
-    altura3           VARCHAR2(10),
-    altura4           VARCHAR2(10),
-    altura5           VARCHAR2(10),
-    altura6           VARCHAR2(10),
-    altura7           VARCHAR2(10),
-    altura8           VARCHAR2(10),
-    largocamion       VARCHAR2(10) NOT NULL,
-    rutchofer         VARCHAR2(10) NOT NULL,
-    patentecamion     VARCHAR2(10) NOT NULL,
-    idsecacopio       VARCHAR2(20) NOT NULL,
-    idcalidad         VARCHAR2(20) NOT NULL,
-    idfactura         VARCHAR2(10)
+    idrecepcion        VARCHAR2(10) NOT NULL,
+    sucursal           CLOB NOT NULL,
+    fecharecepcion     DATE NOT NULL,
+    horarecepcion      TIMESTAMP(4) WITH LOCAL TIME ZONE NOT NULL,
+    rutrrecepcionista  VARCHAR2(10) NOT NULL,
+    idguiarep          VARCHAR2(10) NOT NULL,
+    fechaguiarecep     DATE NOT NULL,
+    altura1            VARCHAR2(10) NOT NULL,
+    altura2            VARCHAR2(10),
+    altura3            VARCHAR2(10),
+    altura4            VARCHAR2(10),
+    altura5            VARCHAR2(10),
+    altura6            VARCHAR2(10),
+    altura7            VARCHAR2(10),
+    altura8            VARCHAR2(10),
+    largocamion        VARCHAR2(10) NOT NULL,
+    rutchofer          VARCHAR2(10) NOT NULL,
+    patentecamion      VARCHAR2(10) NOT NULL,
+    idsecacopio        VARCHAR2(20) NOT NULL,
+    idcalidad          VARCHAR2(20) NOT NULL,
+    idfactura          VARCHAR2(10) NOT NULL,
+    pagocontado        VARCHAR2(1) NOT NULL
 );
 
 ALTER TABLE informe_recepcion ADD CONSTRAINT informe_recepcion_pk PRIMARY KEY ( idrecepcion );
@@ -106,42 +110,33 @@ CREATE TABLE sector_acopio (
 ALTER TABLE sector_acopio ADD CONSTRAINT sector_acopio_pk PRIMARY KEY ( idsecacopio );
 
 CREATE TABLE servicio_cosecha (
-    idcosecha                 INTEGER NOT NULL,
+    idcosecha                 VARCHAR2(10) NOT NULL,
     rutcontratistacosecha     VARCHAR2(10) NOT NULL,
     nombrecontratistacosecha  CLOB NOT NULL,
-    valorserviciocosecha      NUMBER(20) NOT NULL,
-    faena_idfaena             VARCHAR2(20) NOT NULL
+    dfaena                    VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE servicio_cosecha ADD CONSTRAINT servicio_cosecha_pk PRIMARY KEY ( idcosecha );
 
 CREATE TABLE servicio_transporte (
-    idtransporte                 INTEGER NOT NULL,
-    rutcontratistatransporte     INTEGER NOT NULL,
-    nombrecontratistatransporte  CLOB NOT NULL,
-    valortransporte              NUMBER(10) NOT NULL,
-    faena_idfaena                VARCHAR2(20) NOT NULL
+    idtransporte           INTEGER NOT NULL,
+    rut_contra_transporte  VARCHAR2(10) NOT NULL,
+    nom_contra_transporte  CLOB NOT NULL,
+    idfaena                VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE servicio_transporte ADD CONSTRAINT servicio_transporte_pk PRIMARY KEY ( idtransporte );
 
 CREATE TABLE venta_directa (
-    idventadirecta INTEGER NOT NULL
+    idventadirecta  VARCHAR2(10) NOT NULL,
+    idrecepcion     VARCHAR2(10) NOT NULL
 );
 
 ALTER TABLE venta_directa ADD CONSTRAINT venta_directa_pk PRIMARY KEY ( idventadirecta );
 
-ALTER TABLE factura_compra
-    ADD CONSTRAINT fact_comp_faena_fk FOREIGN KEY ( idfaena )
-        REFERENCES faena ( idfaena );
-
-ALTER TABLE factura_compra
-    ADD CONSTRAINT fact_comp_venta_directa_fk FOREIGN KEY ( idventadirecta )
-        REFERENCES venta_directa ( idventadirecta );
-
-ALTER TABLE informe_recepcion
-    ADD CONSTRAINT inf_recep_dat_transportista_fk FOREIGN KEY ( rutchofer )
-        REFERENCES datos_transportista ( rutchofer );
+ALTER TABLE faena
+    ADD CONSTRAINT faena_informe_recepcion_fk FOREIGN KEY ( idrecepcion )
+        REFERENCES informe_recepcion ( idrecepcion );
 
 ALTER TABLE informe_recepcion
     ADD CONSTRAINT inf_recep_factura_compra_fk FOREIGN KEY ( idfactura )
@@ -152,20 +147,28 @@ ALTER TABLE informe_recepcion
         REFERENCES metro_ruma ( idcalidad );
 
 ALTER TABLE informe_recepcion
-    ADD CONSTRAINT inf_recep_recepcionista_fk FOREIGN KEY ( rutrecepcionista )
+    ADD CONSTRAINT inf_recep_recepcionista_fk FOREIGN KEY ( rutrrecepcionista )
         REFERENCES recepcionista ( rutrrecepcionista );
 
 ALTER TABLE informe_recepcion
     ADD CONSTRAINT inf_recep_sector_acopio_fk FOREIGN KEY ( idsecacopio )
         REFERENCES sector_acopio ( idsecacopio );
 
-ALTER TABLE servicio_cosecha
-    ADD CONSTRAINT servicio_cosecha_faena_fk FOREIGN KEY ( faena_idfaena )
-        REFERENCES faena ( idfaena );
+ALTER TABLE informe_recepcion
+    ADD CONSTRAINT inf_recep_transportista_fk FOREIGN KEY ( rutchofer )
+        REFERENCES datos_transportista ( rutchofer );
 
 ALTER TABLE servicio_transporte
-    ADD CONSTRAINT servicio_transporte_faena_fk FOREIGN KEY ( faena_idfaena )
+    ADD CONSTRAINT serv_transporte_faena_fk FOREIGN KEY ( idfaena )
         REFERENCES faena ( idfaena );
+
+ALTER TABLE servicio_cosecha
+    ADD CONSTRAINT servicio_cosecha_faena_fk FOREIGN KEY ( dfaena )
+        REFERENCES faena ( idfaena );
+
+ALTER TABLE venta_directa
+    ADD CONSTRAINT venta_directa_inf_recepcion_fk FOREIGN KEY ( idrecepcion )
+        REFERENCES informe_recepcion ( idrecepcion );
 
 
 
