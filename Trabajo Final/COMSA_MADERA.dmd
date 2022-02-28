@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="COMSA_MADERA" id="2019A927-F77D-A6FE-F320-4378AC2C1474" version="3.5">
+<createdBy>loreb</createdBy>
+<createdTime>2022-02-19 14:40:06 UTC</createdTime>
+<ownerDesignName>COMSA_MADERA</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>2019A927-F77D-A6FE-F320-4378AC2C1474</designId>
+</OSDM_Design>
